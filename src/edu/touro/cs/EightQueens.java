@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class EightQueens {
     private final int BOARD_SIZE = 4;
     private final int QUEENS_MAX = BOARD_SIZE;
-    private List<Point[] pieces = new Point[QUEENS_MAX];
+    private Point[] pieces = new Point[QUEENS_MAX];
 
     private final int NOT_LEGAL_MOVE = -1;
 
