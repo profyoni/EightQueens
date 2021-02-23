@@ -76,7 +76,7 @@ public class EightQueens {
 
 
 
-    boolean solve(LinkedList<Point> pieces, int pieceNum) {
+    void solve(LinkedList<Point> pieces, int pieceNum) {
         for (int i = 0; i < BOARD_SIZE; i++) {
             Point candidateLocation = new Point(i, pieceNum);//queen N is placed into that column (qIndex) and we iterate through rows
             if (isLegal(pieces, candidateLocation)) {
@@ -87,33 +87,30 @@ public class EightQueens {
                 }
                 if (pieces.size() == BOARD_SIZE) { // Base Case
                     solutions.add( boardToString(pieces));
-                    return true;
+
                 } else // Recursive Case
-                    if (! solve(new LinkedList<>(pieces), pieceNum + 1))
-                    {
-                        if (Consts.DEBUG)
-                        {
-                            System.out.println("Backtracking");
-                        }
-                        pieces.removeLast();//backtrack
-                        continue;
+                {
+                    solve(new LinkedList<>(pieces), pieceNum + 1);
+                    if (Consts.DEBUG) {
+                        System.out.println("Backtracking");
                     }
+                    pieces.removeLast();//backtrack
+                    continue;
+                }
             }
         }
-        return false;
     }
 
     private List<String> solutions = new LinkedList<>();
 
     public List<String> solveAll()
     {
-        LinkedList<Point> pieces = new LinkedList<>();
-        solve(pieces,0);
+        solve(new LinkedList<>(),0);
         return solutions;
     }
 
     public static void main(String[] args) {
-        EightQueens q = new EightQueens(6);
+        EightQueens q = new EightQueens(4);
         List<String> solutions =  q.solveAll();
         System.out.printf("%d Solutions%n", solutions.size());
         for(String s: solutions)
