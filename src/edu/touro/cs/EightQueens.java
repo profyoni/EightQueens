@@ -8,13 +8,13 @@ import java.util.List;
 
 class Consts
 {
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
 }
 
 public class EightQueens {
     EightQueens(int boardSize)
     {
-        BOARD_SIZE = boardSize;
+       BOARD_SIZE = boardSize;
     }
 
     private final int BOARD_SIZE;
@@ -26,8 +26,6 @@ public class EightQueens {
             Arrays.fill(board[i], -1);
         int pieceNum = 0;
         for (Point piece : pieces) {
-            if (piece == null)
-                break;
             board[piece.y][piece.x] = pieceNum++;
         }
         StringBuilder sb = new StringBuilder();
@@ -64,7 +62,7 @@ public class EightQueens {
      * Checks if the queen at newLocation is legal with respect to all queens previous queens
      * @return
      */
-    private boolean isLegal(LinkedList<Point> pieces, Point newLocation)
+    private boolean isLegal(List<Point> pieces, Point newLocation)
     {
         for (Point p : pieces) {
             if ( ! isLegal(p, newLocation) ){
@@ -83,20 +81,18 @@ public class EightQueens {
                 pieces.add(candidateLocation);
                 if (Consts.DEBUG)
                 {
-                    System.out.println( boardToString(pieces) );
+                    System.out.println( boardToString(pieces) ); // log
                 }
-                if (pieces.size() == BOARD_SIZE) { // Base Case
+                if (pieces.size() == BOARD_SIZE) { // Base Case - solution
                     solutions.add( boardToString(pieces));
-
                 } else // Recursive Case
                 {
                     solve(new LinkedList<>(pieces), pieceNum + 1);
                     if (Consts.DEBUG) {
                         System.out.println("Backtracking");
                     }
-                    pieces.removeLast();//backtrack
-                    continue;
                 }
+                pieces.removeLast(); // backtrack
             }
         }
     }
