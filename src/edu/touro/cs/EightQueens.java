@@ -8,7 +8,7 @@ import java.util.List;
 
 class Consts
 {
-    public static boolean DEBUG = true;
+    public static final boolean DEBUG = true;
 }
 
 public class EightQueens {
@@ -21,9 +21,7 @@ public class EightQueens {
 
     public String boardToString(List<Point> pieces)
     {
-        int board[][] = new int[BOARD_SIZE][BOARD_SIZE];
-        for (int i=0;i<board.length;i++)
-            Arrays.fill(board[i], -1);
+        Integer board[][] = new Integer[BOARD_SIZE][BOARD_SIZE];
         int pieceNum = 0;
         for (Point piece : pieces) {
             board[piece.y][piece.x] = pieceNum++;
@@ -33,7 +31,7 @@ public class EightQueens {
         {
             for (int j=0;j<BOARD_SIZE;j++) {
                 sb.append(
-                        String.format(" %2s |",board[j][i] == -1 ? " " : board[j][i] ));
+                        String.format(" %2s |",board[j][i] == null ? " " : board[j][i] ));
             }
             sb.append("\n");
             for (int j=0;j<BOARD_SIZE;j++) {
@@ -72,16 +70,14 @@ public class EightQueens {
         return true;
     }
 
-
-
     void solve(LinkedList<Point> pieces, int pieceNum) {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            Point candidateLocation = new Point(i, pieceNum);//queen N is placed into that column (qIndex) and we iterate through rows
+        for (int row = 0; row < BOARD_SIZE; row++) {
+            Point candidateLocation = new Point(row, pieceNum);//queen N is placed into that column (qIndex) and we iterate through rows
             if (isLegal(pieces, candidateLocation)) {
                 pieces.add(candidateLocation);
                 if (Consts.DEBUG)
                 {
-                    System.out.println( boardToString(pieces) ); // log
+                    System.out.println( boardToString(pieces) ); // log/ tracing
                 }
                 if (pieces.size() == BOARD_SIZE) { // Base Case - solution
                     solutions.add( boardToString(pieces));
@@ -101,7 +97,7 @@ public class EightQueens {
 
     public List<String> solveAll()
     {
-        solve(new LinkedList<>(),0);
+        solve(new LinkedList<Point>(),0);
         return solutions;
     }
 
