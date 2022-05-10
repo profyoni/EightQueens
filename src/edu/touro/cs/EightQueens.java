@@ -71,8 +71,8 @@ public class EightQueens {
     }
 
     void solve(LinkedList<Point> pieces, int pieceNum) {
-        for (int row = 0; row < BOARD_SIZE; row++) {
-            Point candidateLocation = new Point(row, pieceNum);//queen N is placed into that column (qIndex) and we iterate through rows
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            Point candidateLocation = new Point(i, pieceNum);//queen N is placed into that column (qIndex) and we iterate through rows
             if (isLegal(pieces, candidateLocation)) {
                 pieces.add(candidateLocation);
                 if (Consts.DEBUG)
